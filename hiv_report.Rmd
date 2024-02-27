@@ -1,0 +1,107 @@
+---
+title: "VRC01 Neutralization Report"
+author: "Carmen Raterman"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, read-config, include = FALSE}
+WHICH_CONFIG <- Sys.getenv("WHICH_CONFIG")
+config_list <- config::get(
+  config = WHICH_CONFIG
+)
+```
+
+```{r, set-chunk-opts, echo = FALSE, eval = config_list$production}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE
+)
+```
+
+```{r, load-data}
+#specify location of "hiv_report.Rmd" relative to the root
+getwd()
+here::i_am("hiv_report.Rmd")
+data <- readRDS(
+  file = here::here("output", "data_clean.rds")
+)
+
+```
+
+# Descriptive Analysis
+
+## Tabular analysis
+
+Characteristics of the `r nrow(data)` viruses from the CATNAP database are displayed
+in the table below.
+
+```{r, table1}
+# reading in object we created from output directory
+table_one <- readRDS(
+  file = here::here("output", "table_one.rds")
+)
+# now display it
+table_one
+```
+
+## Graphical analysis
+
+Below we report a scatter plot of antibody resistance as a function of 
+number of PNGs in the glycan shield. 
+
+```{r, plot-data}
+#| fig.align = "center",
+#| out.width = "600px"
+
+knitr::include_graphics(
+  here::here("output", "scatterplot.png")
+)
+
+```
+
+# Regression Analysis
+
+## Primary model
+
+```{r, fit-primary-model}
+both_regression_tables_filename <- paste0(
+  "both_regression_tables_config_",
+  WHICH_CONFIG,
+  ".rds"
+)
+
+both_regression_tables <- readRDS(
+  file = here::here("output", both_regression_tables_filename)
+)
+
+both_regression_tables$primary
+```
+
+## Secondary model
+
+In this analysis, we generated a binary outcome where level 1 of the outcome
+means the antibody resistance score was greater than `r config_list$cutpoint`.
+
+```{r, secondary-model}
+both_regression_tables$secondary
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

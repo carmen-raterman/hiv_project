@@ -1,0 +1,7 @@
+default:
+  production: TRUE
+  cutpoint: 1
+  
+test:
+  production: FALSE
+  cutpoint: 0

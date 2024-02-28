@@ -31,9 +31,20 @@ secondary_regression_table <-
   tbl_regression(binary_mod, exponentiate = TRUE) |>
     add_global_p()
 
+tertiary_mod <- glm(
+  I(ab_resistance > config_list$cutpoint) ~ shield_glycans + region + env_length,
+  data = data,
+  family = binomial(link = "probit")
+)
+
+tertiary_regression_table <-
+  tbl_regression(tertiary_mod) |>
+    add_global_p()
+
 both_models <- list(
   primary = mod,
-  secondary = binary_mod
+  secondary = binary_mod,
+  tertiary = tertiary_mod
 )
 
 #if active config is test
@@ -50,7 +61,8 @@ saveRDS(
 
 both_regression_tables <- list(
   primary = primary_regression_table,
-  secondary = secondary_regression_table
+  secondary = secondary_regression_table,
+  tertiary = tertiary_regression_table
 )
 
 both_regression_tables_filename <- paste0(

@@ -82,12 +82,21 @@ both_regression_tables$primary
 
 In this analysis, we generated a binary outcome where level 1 of the outcome
 means the antibody resistance score was greater than `r config_list$cutpoint`.
+These results are based on logistic regression.
 
 ```{r, secondary-model}
 both_regression_tables$secondary
 ```
 
+## Tertiary Model
 
+In this analysis, we generated a binary outcome where level 1 of the outcome
+means the antibody resistance score was greater than `r config_list$cutpoint`.
+These results are based on probit regression.
+
+```{r, tertiary-model}
+both_regression_tables$tertiary
+```
 
 
 

@@ -13,7 +13,7 @@ var_label(data) <- list(
   env_length = "Length of Env protein"
 )
 
-data$number_glycans <- ifelse(data$shield_glycans < 4, "< 4", ">= 4")
+data$number_glycans <- ifelse(data$shield_glycans < 5, "< 5", ">= 5")
 
 print("I executed without any errors.")
 
